@@ -41,42 +41,18 @@ async fn main() -> std::io::Result<()> {
 }
 
 
-*Advanced C++ Project: Implementing a Parallel Image Processing Application*
+*Rust Code: Concurrent Web Server*
 
-cpp
-// Advanced C++ program: Parallel image processing using OpenMP
+- *Input*: No direct user input is provided. The input is an HTTP request sent to the web server, typically through a web browser or a tool like cURL. For example:
+  
+  curl http://localhost:8080/
+  
 
-#include <iostream>
-#include <vector>
-#include <opencv2/opencv.hpp>
-#include <omp.h>
+- *Output*: When the root endpoint is accessed, the server responds with an HTTP OK status code (200) and a message displaying the current value of the counter. For example:
+  
+  Counter: 1
+  
 
-void process_image(cv::Mat& image) {
-    // Process image (e.g., apply filter, resize, etc.)
-    cv::GaussianBlur(image, image, cv::Size(5, 5), 0);
-}
+- *Explanation*: Each time the root endpoint is accessed, the counter increments by one and the updated counter value is displayed in the response body.
 
-int main() {
-    // Load image
-    cv::Mat image = cv::imread("input.jpg");
-
-    // Split image into smaller regions
-    std::vector<cv::Rect> regions;
-    // Populate 'regions' vector with subregions of 'image'
-
-    // Process each subregion in parallel
-#pragma omp parallel for
-    for (size_t i = 0; i < regions.size(); ++i) {
-        cv::Mat sub_image = image(regions[i]);
-        process_image(sub_image);
-    }
-
-    // Merge processed subregions into final image
-    // (This step may require synchronization if necessary)
-
-    // Save final image
-    cv::imwrite("output.jpg", image);
-
-    return 0;
-}
 
